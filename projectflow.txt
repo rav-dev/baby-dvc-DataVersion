@@ -43,4 +43,12 @@
 
 11. Now we will make changes in the mycode.py file. We will append a new row to our data, and 
     then we will check the changes via the dvc status
+    """
+    data.dvc:                                                                                                             
+        changed outs:
+                modified:           data
+    """
 
+12. since changes have happened so we will do dvc commit and dvc push
+
+13. git status -> it will say code is changesd and data.dvc is also changed
