@@ -52,3 +52,28 @@
 12. since changes have happened so we will do dvc commit and dvc push
 
 13. git status -> it will say code is changesd and data.dvc is also changed
+
+
+Trying rollback to first data version 
+
+git checkout <hash> 
+after this when we do dvc status it will say there is a change in the data becasue now we have 
+the md5 hash of the first version but data still is of version 3 
+"""
+data.dvc:                                                                                                             
+        changed outs:
+                modified:           data
+"""
+
+dvc pull -> now with the md5 hash dvc will return that corresponding data which is our 
+data version 1 
+
+
+now if we want to do to the current data version 3 we will switch to the main 
+
+git checkout main 
+again dvc status shows changes and we will do dvc pull
+
+git log --oneline
+git checkout <hash> - git checkout main 
+dvc pull
