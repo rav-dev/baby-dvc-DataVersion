@@ -33,4 +33,14 @@
 8. Now after the above ops when we check git status it will prompt us that new files as we 
     discussed above were created. But when we check dvc status then its says Data and pipelines are up to date. 
     This is becasue the file in the data folder has not yet been manipulated, its the same as before
-    
+
+9. do dvc commit and push -> this is imp becasue so far dvc is tracking the data but it has 
+    not yet saved the snapshot of that data in the S3 folder. 2 files pushed -> original data and its 
+    corresponding md5 hash unique identifier. 
+
+10. Now it is recommend to do a git commit and push so that we started tacking the dvc ids 
+    as well -> it is also recommended that we shall not track S3 on git
+
+11. Now we will make changes in the mycode.py file. We will append a new row to our data, and 
+    then we will check the changes via the dvc status
+
