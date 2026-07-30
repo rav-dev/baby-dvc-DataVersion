@@ -1,10 +1,36 @@
 1. create a git repo and clone it in the local 
 2. create code.py and add code to it -> this will save a csv file to a new data folder
 3. do a git add-commit-push before initializing dvc
+
+#pip install dvc
 4. Now we do dvc init -> creates .dvcignore and .dvc
-5. Now do mkdir d3 -> creates a new s3 dvcignore
-6. Now we do dvc remote add -d myremote s3
-7. next dvc add data 
-    now it will ask to do -> git rm -r --cached 'data' and git commit -m 'stop tracking data'
+5. Now do mkdir s3 -> creates a new s3 dvcignore. This is where DVC stores the data
+6. Now we do dvc remote add -d myremote s3. We need to tell DVC that this is the remote 
+    (similar to we tell git that it is the remote) where we need to store the data. 
+7. next dvc add data/ -> whatever data is present in the data folder from now onwards dvc is
+    responsible for its tracking. But in case we would like to track any specific file in the 
+    data folder then we can also do dvc add data/file_name
+    But this will throw an error 
+    """
+    r31881@MAC-DB984A77 baby-dvc-DataVersion % dvc add data/ 
+        Adding...                                                                                                             
+        ERROR:  output 'data' is already tracked by SCM (e.g. Git).                                                           
+        You can remove it from Git, then add to DVC.
+        To stop tracking from Git:
+            git rm -r --cached 'data'
+    """
+    This error occurs because the entire data folder is already been tracked with the git
+    so DVC is asking if you want me to track files in this folder first make sure git is not 
+    tracking it. Hence it says to do -> git rm -r --cached 'data' and git commit -m 'stop tracking data'
     becasue initially we were tracking data/ folder from git so now we remove it for dvc to handle
-8. Again we do dvc add data 
+    The commit is necessary becasue when there is a change in the git then we need to commit it. removing 
+    data folder is a change. 
+    Now do dvc add data/  it will work 
+    It will create the data.dvc file, cache file and also will add /data folder in the .gitignore. 
+    The data.dvc and cache file in .dvc will have the md5 hash id which is the unique identifier for the data. 
+    This helps to recognize which data we used for which experiment and helps in rollbacking ops. 
+
+8. Now after the above ops when we check git status it will prompt us that new files as we 
+    discussed above were created. But when we check dvc status then its says Data and pipelines are up to date. 
+    This is becasue the file in the data folder has not yet been manipulated, its the same as before
+    
